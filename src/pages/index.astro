@@ -1,0 +1,70 @@
+---
+import MainLayout from "../layouts/main.astro";
+import Hero from "../components/home/hero.astro";
+import Screens from "../components/home/screens.astro";
+import Privacy from "../components/home/privacy.astro";
+import Features from "../components/home/features.astro";
+import Usps from "../components/home/usps.astro";
+import Cta from "../components/home/cta.astro";
+---
+
+<MainLayout title="Home" description="Pallad">
+    <Hero />
+    <Screens />
+    <Privacy />
+    <Features />
+    <Usps />
+    <Cta />
+</MainLayout>
+
+<script>
+    import gsap from "gsap";
+    import { ScrollTrigger } from "gsap/ScrollTrigger";
+    gsap.registerPlugin(ScrollTrigger);
+    const fadeOutTargets = gsap.utils.toArray(
+        ".fade-out",
+    ) as gsap.TweenTarget[];
+    fadeOutTargets.forEach((element) => {
+        gsap.to(element, {
+            autoAlpha: 0,
+            y: 0,
+            duration: 0.5,
+            ease: "power1.out",
+            scrollTrigger: {
+                trigger: element as gsap.DOMTarget,
+                start: "top -25%",
+                scrub: 0.5,
+                end: "bottom 25%",
+            },
+        });
+    });
+    const leftScrollTargets = gsap.utils.toArray(".side-scroll") as any[];
+    leftScrollTargets.forEach((element) => {
+        const startX = parseInt(element?.getAttribute("data-startx") ?? "0");
+        const endX = parseInt(element?.getAttribute("data-endx") ?? "0");
+        gsap.set(element, { xPercent: startX });
+        gsap.to(element, {
+            xPercent: endX,
+            ease: "power1.out",
+            scrollTrigger: {
+                trigger: element as gsap.DOMTarget,
+                scrub: 0.5,
+                end: "+=5000",
+            },
+        });
+    });
+    const enterConfig = { y: 0, autoAlpha: 1 };
+    const gFadeTargets = gsap.utils.toArray(".g-fade") as gsap.TweenTarget[];
+    gFadeTargets.forEach((element) => {
+        gsap.set(element, { autoAlpha: 0 });
+        ScrollTrigger.create({
+            trigger: element as gsap.DOMTarget,
+            start: "center 80%",
+            end: "bottom 40%",
+            onEnter: () => gsap.to(element, enterConfig),
+            onEnterBack: () => gsap.to(element, enterConfig),
+            onLeave: () => gsap.to(element, { y: -80, autoAlpha: 0 }),
+            onLeaveBack: () => gsap.to(element, { y: 80, autoAlpha: 0 }),
+        });
+    });
+</script>

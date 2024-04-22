@@ -1,0 +1,21 @@
+---
+import MenuDrawer from "./menu-drawer.svelte";
+---
+
+<nav
+    class="fixed top-0 left-0 right-0 flex container justify-between items-center pt-10 z-10"
+>
+    <a href="/">
+        <img src="/logo.svg" width={64} height={64} alt="logo" />
+    </a>
+    <div class="flex items-center gap-4">
+        <a href="#" class="btn btn-lg btn-secondary text-sm">Mint theme</a>
+        <div class="indicator">
+            <span class="indicator-item badge badge-accent font-[500]"
+                >soon</span
+            >
+            <a href="#" class="btn btn-lg btn-primary text-sm">Add to Chrome</a>
+        </div>
+        <MenuDrawer client:load />
+    </div>
+</nav>
