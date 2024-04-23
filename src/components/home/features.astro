@@ -45,9 +45,17 @@
     </div>
     <div class="side-scroll flex gap-6" data-startx={20} data-endx={-60}>
         <div
-            class="bg-neutral px-16 py-12 text-3xl font-[500] rounded-full text-primary"
+            class="flex items-center gap-8 bg-neutral px-16 py-8 text-3xl font-[500] rounded-full text-primary"
         >
-            Currently supporting
+            <span>Currently supporting</span>
+            <div class="flex gap-4 items-center">
+                <div class="bg-secondary p-3 rounded-full">
+                    <img src="/mina.svg" width={36} height={36} />
+                </div>
+                <div class="bg-secondary p-3 rounded-full">
+                    <img src="/zeko.svg" width={36} height={36} />
+                </div>
+            </div>
         </div>
         <div
             class="bg-neutral px-16 py-12 text-3xl font-[500] rounded-full text-accent"

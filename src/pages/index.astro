@@ -5,6 +5,7 @@ import Screens from "../components/home/screens.astro";
 import Privacy from "../components/home/privacy.astro";
 import Features from "../components/home/features.astro";
 import Usps from "../components/home/usps.astro";
+import Articles from "../components/home/articles.astro";
 import Cta from "../components/home/cta.astro";
 ---
 
@@ -14,6 +15,7 @@ import Cta from "../components/home/cta.astro";
     <Privacy />
     <Features />
     <Usps />
+    <Articles />
     <Cta />
 </MainLayout>
 
@@ -59,7 +61,7 @@ import Cta from "../components/home/cta.astro";
         gsap.set(element, { autoAlpha: 0 });
         ScrollTrigger.create({
             trigger: element as gsap.DOMTarget,
-            start: "center 80%",
+            start: "top 75%",
             end: "bottom 40%",
             onEnter: () => gsap.to(element, enterConfig),
             onEnterBack: () => gsap.to(element, enterConfig),
