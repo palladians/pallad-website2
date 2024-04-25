@@ -147,51 +147,32 @@ const decryptedSeed = await keyDecryptor.decryptSeedBytes(serializableData);
 
 ### InMemoryKeyAgent
 
-The `InMemoryKeyAgent` is an extension of `KeyAgentBase` that manages the encrypted seed bytes in memory and can restoring a key agent from a mnemonic.
+The `InMemoryKeyAgent` extends `KeyAgentBase` to manage encrypted seed bytes in memory, facilitating the restoration of a key agent from a mnemonic phrase. It plays a crucial role in the secure handling of sensitive key material, aligning with the W3C Universal Wallet Specification. 
 
 #### Usage and Functionality
 
-To use `InMemoryKeyAgent`, you need to provide a passphrase, which is a function returning a promise that resolves to the passphrase used for seed encryption.
+- **Constructing an Instance**: Initialize a new `InMemoryKeyAgent` by providing the required properties defined in `SerializableInMemoryKeyAgentData`, including encrypted seed bytes and a passphrase function.
 
-The class provides the following functionalities:
+- **Restoring a KeyAgent**: This method reinitializes an existing `KeyAgent` by deriving necessary credentials based on blockchain-specific parameters.
 
-- Constructing a new instance: This requires providing all necessary details to create a `SerializableInMemoryKeyAgentData` type object, including the encrypted seed bytes and the passphrase function.
+- **Creating from Mnemonic Words**: Create a new instance from BIP39 mnemonic words. The process involves validating the mnemonics, generating entropy, deriving a seed, and encrypting the seed with a passphrase. If the mnemonics are invalid or encryption fails, an error is thrown.
 
-- Restoring a KeyAgent: This feature can reinitialize a `KeyAgent` instance by deriving the necessary credentials. It takes a payload and arguments specific to the blockchain in use.
+#### Example Usage
 
-- Creating an instance from mnemonic words: This feature creates a new `InMemoryKeyAgent` from a provided list of BIP39 mnemonic words and a passphrase. The passphrase is used to encrypt the seed derived from the mnemonic words.
-
-**Note:** The `fromMnemonicWords` function first validates the provided mnemonic words. It then converts the mnemonic words into entropy, generates a seed from the entropy, and encrypts it using the passphrase. If the mnemonic words are not valid or the encryption fails, the function throws an error.
-
-Here's a simple example of usage:
-
-```ts
+```typescript
 const mnemonicWords = [
-  'habit',
-  'hope',
-  'tip',
-  'crystal',
-  'because',
-  'grunt',
-  'nation',
-  'idea',
-  'electric',
-  'witness',
-  'alert',
-  'like'
-]
-const getPassphrase = new Promise<Uint8Array>((resolve) =>
+  'habit', 'hope', 'tip', 'crystal', 'because',
+  'grunt', 'nation', 'idea', 'electric', 'witness',
+  'alert', 'like'
+];
+const getPassphrase = () => new Promise<Uint8Array>((resolve) =>
   resolve(Buffer.from('passphrase'))
-)
+);
 
 const agent = await InMemoryKeyAgent.fromMnemonicWords({
   mnemonicWords,
   getPassphrase
-})
+});
 ```
-
-**Important**: When implementing, the passphrase function should be set up in a secure way that's suitable for your application.
-
-With the `InMemoryKeyAgent`, you can handle sensitive key material in a way that conforms to the W3C Universal Wallet Specification. It enables you to derive credentials, sign transactions, and manage seeds for supported blockchain networks, with secure in-memory storage.
 
 Check out the test suite!
