@@ -21,7 +21,8 @@ export default defineConfig({
       titleDelimiter: "-",
       sidebar: [
         { label: "Introduction to Pallad", link: "/docs" }, 
-        { label: "Key Management", link: "/docs/key-management" }
+        { label: "Key Management", link: "/docs/key-management" },
+        { label: "Providers", link: "/docs/providers" }
       ],
     }),
   ],
