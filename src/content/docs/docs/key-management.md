@@ -147,51 +147,124 @@ const decryptedSeed = await keyDecryptor.decryptSeedBytes(serializableData);
 
 ### InMemoryKeyAgent
 
-The `InMemoryKeyAgent` is an extension of `KeyAgentBase` that manages the encrypted seed bytes in memory and can restoring a key agent from a mnemonic.
+The `InMemoryKeyAgent` extends `KeyAgentBase` to manage encrypted seed bytes in memory, facilitating the restoration of a key agent from a mnemonic phrase. It plays a crucial role in the secure handling of sensitive key material, aligning with the W3C Universal Wallet Specification. 
 
 #### Usage and Functionality
 
-To use `InMemoryKeyAgent`, you need to provide a passphrase, which is a function returning a promise that resolves to the passphrase used for seed encryption.
+- **Constructing an Instance**: Initialize a new `InMemoryKeyAgent` by providing the required properties defined in `SerializableInMemoryKeyAgentData`, including encrypted seed bytes and a passphrase function.
 
-The class provides the following functionalities:
+- **Restoring a KeyAgent**: This method reinitializes an existing `KeyAgent` by deriving necessary credentials based on blockchain-specific parameters.
 
-- Constructing a new instance: This requires providing all necessary details to create a `SerializableInMemoryKeyAgentData` type object, including the encrypted seed bytes and the passphrase function.
+- **Creating from Mnemonic Words**: Create a new instance from BIP39 mnemonic words. The process involves validating the mnemonics, generating entropy, deriving a seed, and encrypting the seed with a passphrase. If the mnemonics are invalid or encryption fails, an error is thrown.
 
-- Restoring a KeyAgent: This feature can reinitialize a `KeyAgent` instance by deriving the necessary credentials. It takes a payload and arguments specific to the blockchain in use.
+#### Example Usage
 
-- Creating an instance from mnemonic words: This feature creates a new `InMemoryKeyAgent` from a provided list of BIP39 mnemonic words and a passphrase. The passphrase is used to encrypt the seed derived from the mnemonic words.
-
-**Note:** The `fromMnemonicWords` function first validates the provided mnemonic words. It then converts the mnemonic words into entropy, generates a seed from the entropy, and encrypts it using the passphrase. If the mnemonic words are not valid or the encryption fails, the function throws an error.
-
-Here's a simple example of usage:
-
-```ts
+```typescript
 const mnemonicWords = [
-  'habit',
-  'hope',
-  'tip',
-  'crystal',
-  'because',
-  'grunt',
-  'nation',
-  'idea',
-  'electric',
-  'witness',
-  'alert',
-  'like'
-]
-const getPassphrase = new Promise<Uint8Array>((resolve) =>
+  'habit', 'hope', 'tip', 'crystal', 'because',
+  'grunt', 'nation', 'idea', 'electric', 'witness',
+  'alert', 'like'
+];
+const getPassphrase = () => new Promise<Uint8Array>((resolve) =>
   resolve(Buffer.from('passphrase'))
-)
+);
 
 const agent = await InMemoryKeyAgent.fromMnemonicWords({
   mnemonicWords,
   getPassphrase
-})
+});
 ```
 
-**Important**: When implementing, the passphrase function should be set up in a secure way that's suitable for your application.
-
-With the `InMemoryKeyAgent`, you can handle sensitive key material in a way that conforms to the W3C Universal Wallet Specification. It enables you to derive credentials, sign transactions, and manage seeds for supported blockchain networks, with secure in-memory storage.
-
 Check out the test suite!
+
+### SessionKeyAgent (Experimental)
+
+`SessionKeyAgentBase` is an abstract class designed to facilitate session-based key management for blockchain applications, particularly for smart contract developers. This class allows for the dynamic derivation of non-encrypted private key credentials for a session, which can be used for signing operations without repeated user authorization. This makes it ideal for applications requiring a high frequency of operations within a session, such as those involving smart contracts.
+
+#### Key Concepts
+
+- **Session Keys:** Temporary private keys that are derived for the duration of a session without being encrypted. These keys are used to sign transactions or messages directly, reducing the need for constant user interaction.
+- **Smart Contract Constraints:** Developers can specify constraints around the session key's operations, typically by defining what actions the key can perform within the smart contract's methods.
+
+#### Features
+
+- Dynamically generates session-specific private keys for transaction signing.
+- Eliminates the need for the end user to sign every transaction, enhancing user experience and application efficiency.
+- Supports experimental features such as signing a Merkle root of session parameters to establish session constraints.
+
+#### Experimental Features
+
+Session keys are experimental and introduce new capabilities, such as:
+
+```typescript
+export interface OffchainSessionAllowedMethods {
+  contractAddress: string;
+  method: string;
+}
+
+export type RequestOffchainSession = {
+  data: {
+    sessionKey: string;
+    expirationTime: string;
+    allowedMethods: OffchainSessionAllowedMethods[];
+    sessionMerkleRoot: MinaSignablePayload;
+  };
+};
+```
+
+#### Usage
+An application, for example, a zkApp, might use SessionKeyAgentBase to derive a new random private key credential for a session. It can also handle an experimental web-provider listener that receives requests to sign the Merkle root of the session's parameters.
+
+Here's how an application can use SessionKeyAgentBase:
+```typescript
+class SessionKeyAgentBaseInstance extends SessionKeyAgentBase {}
+const networkType = "testnet";
+const instance = new SessionKeyAgentBaseInstance();
+
+const args: MinaDerivationArgs = {
+  network: Network.Mina,
+  accountIndex: Math.floor(Math.random() * 10),
+  addressIndex: Math.floor(Math.random() * 10),
+};
+
+const sessionCredential = await instance.deriveCredentials(args);
+const sessionParams = {
+  sessionKey: "B62..flsw",
+  expirationTime: "14950204",
+  allowedMethods: [
+    {
+      contractAddress: "B62..dow",
+      method: "MoveChessPieces"
+    }
+  ]
+};
+const requestedSessionParams = {
+  data: sessionParams,
+  sessionMerkleRoot: toMerkleTree(sessionParams).getRoot()
+};
+
+// Request wallet to sign the root
+const accounts = await window.mina.request({method: 'mina_enable'});
+const signedRoot = await window.mina.request({method: 'experimental_requestSession', params: requestedSessionParams});
+
+// Commit signedRoot to contract
+const tx = await Mina.transaction(accounts[0], async () => {
+  await chessZkApp.commitSession(signedRoot, accounts[0]);
+});
+
+// Sign many transactions
+for (const move of chessGameMoves) {
+  const chessMovetx = await Mina.transaction(accounts[0], async () => {
+    await chessZkApp.chessMove(move);
+  });
+  const signedTx = await instance.sign(sessionCredential, chessMovetx, {
+    network: Network.Mina,
+    networkType: "testnet",
+    operation: "mina_signTransaction",
+  });
+  await submitTxProvider(signedTx);
+}
+```
+
+#### Note
+Smart contract engineers are advised to encapsulate the complexity of constraining the session key's operations within their contract methods. The constraints can be expressed to end-users when asking them to sign the merkle root of permissions.
