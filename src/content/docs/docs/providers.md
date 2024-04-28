@@ -29,7 +29,7 @@ The `NodeStatusProvider` is Pallad's means of querying network information to se
 
 Pallad is a multi-chain wallet and has taken significant engineering effort to create an chain-agnostic implementation of these providers together under a single `UnifiedChainProvider`.
 
-### UnifiedChainProvider
+### `UnifiedChainProvider`
 
 Pallad's `UnifiedChainProvider` integrates multiple blockchain providers into a cohesive interface, enabling seamless interaction with different aspects of blockchain data management. This approach ensures that Pallad remains chain-agnostic, providing robust functionality across multiple blockchain networks.
 
@@ -87,6 +87,17 @@ const nodeStatus = await chainProvider.getNodeStatus();
 // Perform a comprehensive health check
 const healthStatus = await chainProvider.healthCheck();
 ```
+
+#### A Note on `ProviderConfig`
+
+The `ProviderConfig` is an interface that allows both Pallad users and applications interacting with Pallad to define specific network configurations. Overall a `ProviderConfig` object allows Pallad to switch between different known networks. the `providerName` field has a few possibilities:
+- `mina-node` will allow Pallad to establish connections with a Mina node API for fetching account inforamtion and submitting transactions
+- `mina-explorer` will allow Pallad to establish connections with the current Mina Explorer chain history API for fetching transaction histories
+- `evm-rpc` will allow Pallad to establish connectiosn to a standard EVM network RPC for fetching account inforamtion and submitting transactions
+- `evm-explorer` will allow Pallad to establish connections to an Etherscan instance for fetching transaction histories
+
+It is important for both Pallad users and applications interacting with Pallad to define this configuration properly in a well formed request.
+
 
 ## Inside Pallad
 Pallad doesn't store a provider specifically but it stores the provider configuration. Users defining a provider configuration can allow pallad to agnostically connect to any Mina network; currently that includes Berkeley, Devnet, Zeko-Devnet. When Pallad needs to get network data or send transactions to the network it uses the stored provider configurations for the current network the user is interacting with the create a new provider and fetch or submit the necessary information for the user's desired operation or interaction. If you want to check out how this is done in Pallad the `network-info` slice of the `vault` is where these provider configurations are stored. On the topic of custom tokens, Pallad also supports fetching the custom token balances of a user, and this information is stored in the `token-info` slice of the `vault`, much like in other Web3 wallets, end-users can define the address and token ticker for the custom tokens they wish Pallad to fetch account information for.
