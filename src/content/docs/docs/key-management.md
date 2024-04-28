@@ -176,3 +176,95 @@ const agent = await InMemoryKeyAgent.fromMnemonicWords({
 ```
 
 Check out the test suite!
+
+### SessionKeyAgent (Experimental)
+
+`SessionKeyAgentBase` is an abstract class designed to facilitate session-based key management for blockchain applications, particularly for smart contract developers. This class allows for the dynamic derivation of non-encrypted private key credentials for a session, which can be used for signing operations without repeated user authorization. This makes it ideal for applications requiring a high frequency of operations within a session, such as those involving smart contracts.
+
+#### Key Concepts
+
+- **Session Keys:** Temporary private keys that are derived for the duration of a session without being encrypted. These keys are used to sign transactions or messages directly, reducing the need for constant user interaction.
+- **Smart Contract Constraints:** Developers can specify constraints around the session key's operations, typically by defining what actions the key can perform within the smart contract's methods.
+
+#### Features
+
+- Dynamically generates session-specific private keys for transaction signing.
+- Eliminates the need for the end user to sign every transaction, enhancing user experience and application efficiency.
+- Supports experimental features such as signing a Merkle root of session parameters to establish session constraints.
+
+#### Experimental Features
+
+Session keys are experimental and introduce new capabilities, such as:
+
+```typescript
+export interface OffchainSessionAllowedMethods {
+  contractAddress: string;
+  method: string;
+}
+
+export type RequestOffchainSession = {
+  data: {
+    sessionKey: string;
+    expirationTime: string;
+    allowedMethods: OffchainSessionAllowedMethods[];
+    sessionMerkleRoot: MinaSignablePayload;
+  };
+};
+```
+
+#### Usage
+An application, for example, a zkApp, might use SessionKeyAgentBase to derive a new random private key credential for a session. It can also handle an experimental web-provider listener that receives requests to sign the Merkle root of the session's parameters.
+
+Here's how an application can use SessionKeyAgentBase:
+```typescript
+class SessionKeyAgentBaseInstance extends SessionKeyAgentBase {}
+const networkType = "testnet";
+const instance = new SessionKeyAgentBaseInstance();
+
+const args: MinaDerivationArgs = {
+  network: Network.Mina,
+  accountIndex: Math.floor(Math.random() * 10),
+  addressIndex: Math.floor(Math.random() * 10),
+};
+
+const sessionCredential = await instance.deriveCredentials(args);
+const sessionParams = {
+  sessionKey: "B62..flsw",
+  expirationTime: "14950204",
+  allowedMethods: [
+    {
+      contractAddress: "B62..dow",
+      method: "MoveChessPieces"
+    }
+  ]
+};
+const requestedSessionParams = {
+  data: sessionParams,
+  sessionMerkleRoot: toMerkleTree(sessionParams).getRoot()
+};
+
+// Request wallet to sign the root
+const accounts = await window.mina.request({method: 'mina_enable'});
+const signedRoot = await window.mina.request({method: 'experimental_requestSession', params: requestedSessionParams});
+
+// Commit signedRoot to contract
+const tx = await Mina.transaction(accounts[0], async () => {
+  await chessZkApp.commitSession(signedRoot, accounts[0]);
+});
+
+// Sign many transactions
+for (const move of chessGameMoves) {
+  const chessMovetx = await Mina.transaction(accounts[0], async () => {
+    await chessZkApp.chessMove(move);
+  });
+  const signedTx = await instance.sign(sessionCredential, chessMovetx, {
+    network: Network.Mina,
+    networkType: "testnet",
+    operation: "mina_signTransaction",
+  });
+  await submitTxProvider(signedTx);
+}
+```
+
+#### Note
+Smart contract engineers are advised to encapsulate the complexity of constraining the session key's operations within their contract methods. The constraints can be expressed to end-users when asking them to sign the merkle root of permissions.

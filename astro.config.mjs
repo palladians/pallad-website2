@@ -22,7 +22,8 @@ export default defineConfig({
       sidebar: [
         { label: "Introduction to Pallad", link: "/docs" }, 
         { label: "Key Management", link: "/docs/key-management" },
-        { label: "Providers", link: "/docs/providers" }
+        { label: "Providers", link: "/docs/providers" },
+        { label: "Vault", link: "/docs/vault" }
       ],
     }),
   ],
