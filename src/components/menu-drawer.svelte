@@ -15,8 +15,12 @@
         <!-- Page content here -->
         <label
             for="menu-drawer"
-            class="btn btn-lg btn-secondary text-sm p-3 drawer-button"
-            ><img src="/menu.svg" alt="Menu trigger" /></label
+            class="btn lg:btn-lg btn-secondary text-sm p-3 drawer-button"
+            ><img
+                src="/menu.svg"
+                alt="Menu trigger"
+                class="w-6 h-6 lg:w-10 lg:h-10"
+            /></label
         >
     </div>
     <div class="drawer-side z-10">
@@ -29,13 +33,13 @@
             class="w-full max-w-[710px] flex flex-col justify-between items-end min-h-full py-10 px-24 bg-secret-sauce text-base-content drop-shadow-2xl"
         >
             <div class="flex gap-2">
-                <a class="btn btn-outline btn-lg">Mint theme</a>
+                <a class="btn btn-outline lg:btn-lg">Mint theme</a>
                 <a
-                    class="btn bg-white border-none text-base-100 btn-lg hover:bg-zinc-100"
+                    class="btn bg-white border-none text-base-100 lg:btn-lg hover:bg-zinc-100"
                     >Add to Chrome</a
                 >
                 <a
-                    class="btn btn-circle bg-white border-none text-base-100 btn-lg hover:bg-zinc-100"
+                    class="btn btn-circle bg-white border-none text-base-100 lg:btn-lg hover:bg-zinc-100"
                     on:click={() => drawerOpen.set("")}>X</a
                 >
             </div>

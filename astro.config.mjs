@@ -19,10 +19,7 @@ export default defineConfig({
     starlight({
       title: "Pallad Docs",
       titleDelimiter: "-",
-      sidebar: [
-        { label: "Introduction to Pallad", link: "/docs" }, 
-        { label: "Key Management", link: "/docs/key-management" }
-      ],
+      sidebar: [{ label: "Welcome", link: "/docs" }],
     }),
   ],
 });
