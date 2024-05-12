@@ -1,7 +1,7 @@
 <script lang="ts">
-    import { writable } from "svelte/store";
+import { writable } from "svelte/store"
 
-    export const drawerOpen = writable<string>("");
+export const drawerOpen = writable<string>("")
 </script>
 
 <div class="drawer drawer-end">
