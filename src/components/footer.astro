@@ -11,12 +11,19 @@
                     A couple of emails per month, no ads!
                 </p>
             </div>
-            <form class="flex gap-6">
+            <form
+                method="post"
+                action="/api/subscribe.json"
+                class="flex flex-col lg:flex-row gap-6"
+            >
                 <input
+                    type="email"
+                    name="email"
                     placeholder="Enter your email"
                     class="input input-lg bg-white text-neutral"
+                    required
                 />
-                <a class="btn btn-lg">Subscribe</a>
+                <button type="submit" class="btn btn-lg">Subscribe</button>
             </form>
         </div>
     </section>
@@ -24,24 +31,39 @@
         <div
             class="container font-[500] flex flex-col gap-8 lg:flex-row justify-between items-center"
         >
-            <p class="text-[#7D7A9C]">
-                Copyright © {new Date().getFullYear()} Pallad | All Rights Reserved
-            </p>
+            <div class="flex flex-col gap-4">
+                <p class="text-[#7D7A9C]">
+                    Copyright © {new Date().getFullYear()} Pallad | All Rights Reserved
+                </p>
+                <div class="flex gap-8">
+                    <a href="/privacy-policy">Privacy Policy</a>
+                    <a href="/privacy-policy">Terms of Service</a>
+                </div>
+            </div>
             <div class="flex flex-col lg:flex-row gap-12">
                 <div class="flex flex-col lg:flex-row gap-6">
-                    <a class="btn btn-ghost">Blog</a>
-                    <a class="btn btn-ghost">FAQ</a>
-                    <a class="btn btn-ghost">Support</a>
+                    <a href="/blog" class="btn btn-ghost">Blog</a>
+                    <a href="/faq" class="btn btn-ghost">FAQ</a>
+                    <a href="/support" class="btn btn-ghost">Support</a>
                     <a href="/docs" target="_blank" class="btn btn-ghost"
                         >Docs</a
                     >
-                    <a class="btn btn-ghost">Legal</a>
                 </div>
                 <div class="flex gap-4">
-                    <a class="btn btn-square bg-bg-light rounded-lg">
+                    <a
+                        href="https://get.pallad.co/x"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="btn btn-square bg-bg-light rounded-lg"
+                    >
                         <img src="/x.svg" />
                     </a>
-                    <a class="btn btn-square bg-bg-light rounded-lg">
+                    <a
+                        href="https://get.pallad.co/discord"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="btn btn-square bg-bg-light rounded-lg"
+                    >
                         <img src="/discord.svg" />
                     </a>
                 </div>

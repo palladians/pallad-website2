@@ -3,8 +3,6 @@ title: Providers
 description: Providers and how Pallad uses them
 ---
 
-# Views of The Protocol
-
 In any Web3 application, providers are essential components that can "provide" the data necessary for the application to accurately reflect the network state as well as submit data to the network for mutating on-chain states. Together many providers can create end-user specifc views of the protocol like the do in Pallad. This means enhancing the visibility of system status and matching the system to the user's mental model of the network.
 
 Pallad revolves around several core providers in its first release and include providers for account inforamtion (token balances, nonces, staking information), chain history (transaction history), and transaction submission. These providers exist for both Mina and EVM networks as well as for different companies that provide access to their APIs such as Obscura, Blockberry, Etherscan, and others. While there are other types of providers that we have created and exist in Pallad's codebase such as ones for querying transaction status and listening for blocks, their implementation is largely dependent on specific API access.
@@ -44,6 +42,7 @@ Pallad's `UnifiedChainProvider` integrates multiple blockchain providers into a 
 #### Implementation
 
 The `UnifiedChainProvider` leverages individual provider modules, each specialized in a different aspect of blockchain interaction:
+
 - `createAccountInfoProvider`: Manages retrieval of account-specific information.
 - `createChainHistoryProvider`: Handles fetching of transaction histories.
 - `createNodeStatusProvider`: Monitors and reports the status of node APIs.
@@ -67,7 +66,7 @@ const config: ProviderConfig = {
     url: 'https://your-mina-archive-node-url.com'
   }
   networkName: 'mina-network-name'
-  networkType: 'testnet' 
+  networkType: 'testnet'
   chainId: '888'
 }
 const chainProvider = createChainProvider(config);
@@ -91,6 +90,7 @@ const healthStatus = await chainProvider.healthCheck();
 #### A Note on `ProviderConfig`
 
 The `ProviderConfig` is an interface that allows both Pallad users and applications interacting with Pallad to define specific network configurations. Overall a `ProviderConfig` object allows Pallad to switch between different known networks. the `providerName` field has a few possibilities:
+
 - `mina-node` will allow Pallad to establish connections with a Mina node API for fetching account inforamtion and submitting transactions
 - `mina-explorer` will allow Pallad to establish connections with the current Mina Explorer chain history API for fetching transaction histories
 - `evm-rpc` will allow Pallad to establish connectiosn to a standard EVM network RPC for fetching account inforamtion and submitting transactions
@@ -98,6 +98,6 @@ The `ProviderConfig` is an interface that allows both Pallad users and applicati
 
 It is important for both Pallad users and applications interacting with Pallad to define this configuration properly in a well formed request.
 
-
 ## Inside Pallad
+
 Pallad doesn't store a provider specifically but it stores the provider configuration. Users defining a provider configuration can allow pallad to agnostically connect to any Mina network; currently that includes Berkeley, Devnet, Zeko-Devnet. When Pallad needs to get network data or send transactions to the network it uses the stored provider configurations for the current network the user is interacting with the create a new provider and fetch or submit the necessary information for the user's desired operation or interaction. If you want to check out how this is done in Pallad the `network-info` slice of the `vault` is where these provider configurations are stored. On the topic of custom tokens, Pallad also supports fetching the custom token balances of a user, and this information is stored in the `token-info` slice of the `vault`, much like in other Web3 wallets, end-users can define the address and token ticker for the custom tokens they wish Pallad to fetch account information for.

@@ -1,0 +1,43 @@
+@import url("https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap");
+
+:root,
+:root[data-theme="light"] {
+    --sl-font: "Work Sans", sans-serif;
+    --sl-color-white: #fff;
+    --sl-color-accent-low: #1e1b4b;
+    --sl-color-accent: #4f46e5;
+    --sl-color-accent-high: #a4dbe4;
+    --sl-color-gray-1: hsl(224, 20%, 94%);
+    --sl-color-gray-2: hsl(224, 6%, 77%);
+    --sl-color-gray-3: hsl(224, 6%, 56%);
+    --sl-color-gray-4: hsl(224, 7%, 36%);
+    --sl-color-gray-5: #34324c;
+    --sl-color-gray-6: #1f1e2f;
+    --sl-color-gray-7: #090914;
+    --sl-color-black: hsl(249, 36%, 9%);
+    --sl-color-text-accent: var(--sl-color-accent-high);
+    --sl-color-text-invert: var(--sl-color-accent-low);
+    --sl-color-bg: var(--sl-color-gray-7);
+    --sl-color-bg-sidebar: var(--sl-color-gray-6);
+    --sl-color-bg-nav: var(--sl-color-gray-6);
+    --sl-hue-orange: 41;
+    --sl-color-orange-low: hsl(var(--sl-hue-orange), 39%, 22%);
+    --sl-color-orange: hsl(var(--sl-hue-orange), 82%, 63%);
+    --sl-color-orange-high: hsl(var(--sl-hue-orange), 82%, 87%);
+    --sl-hue-green: 101;
+    --sl-color-green-low: hsl(var(--sl-hue-green), 39%, 22%);
+    --sl-color-green: hsl(var(--sl-hue-green), 82%, 63%);
+    --sl-color-green-high: hsl(var(--sl-hue-green), 82%, 80%);
+    --sl-hue-blue: 234;
+    --sl-color-blue-low: hsl(var(--sl-hue-blue), 54%, 20%);
+    --sl-color-blue: hsl(var(--sl-hue-blue), 100%, 60%);
+    --sl-color-blue-high: hsl(var(--sl-hue-blue), 100%, 87%);
+    --sl-hue-purple: 281;
+    --sl-color-purple-low: hsl(var(--sl-hue-purple), 39%, 22%);
+    --sl-color-purple: hsl(var(--sl-hue-purple), 82%, 63%);
+    --sl-color-purple-high: hsl(var(--sl-hue-purple), 82%, 89%);
+    --sl-hue-red: 339;
+    --sl-color-red-low: hsl(var(--sl-hue-red), 39%, 22%);
+    --sl-color-red: hsl(var(--sl-hue-red), 82%, 63%);
+    --sl-color-red-high: hsl(var(--sl-hue-red), 82%, 87%);
+}

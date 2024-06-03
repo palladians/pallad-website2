@@ -3,8 +3,6 @@ title: Key-Management
 description: How key-management is designed in Pallad
 ---
 
-# An Agnostic Key Management Package
-
 Acknowledgements: significant inspiration from [cardano-js-sdk](https://github.com/input-output-hk/cardano-js-sdk) helped build this package. This package has also benefited from the incredible work of [@paulmillr](https://github.com/paulmillr) who's remarkable open source work has helped realize many of the features in this package.
 
 This package provides comprehensive support for key management across multiple ecosystems networks. It comes with support for Mina and Ethereum. It can be extended to include more as needed. The requirements for adding more networks requires adding a directory to `./src/chains` and defining functionality to derive keys, build compliant credentials, and perform signing operations.
@@ -31,56 +29,58 @@ This library exposes various types and methods to interact with supported chains
 #### Example
 
 ```typescript
- mnemonic = [
-      'habit',
-      'hope',
-      'tip',
-      'crystal',
-      'because',
-      'grunt',
-      'nation',
-      'idea',
-      'electric',
-      'witness',
-      'alert',
-      'like'
-]
-seed = bip39.mnemonicToSeed(mnemonic, '')
-encryptedSeedBytes = await emip3encrypt(seed, passphrase)
+mnemonic = [
+  "habit",
+  "hope",
+  "tip",
+  "crystal",
+  "because",
+  "grunt",
+  "nation",
+  "idea",
+  "electric",
+  "witness",
+  "alert",
+  "like",
+];
+seed = bip39.mnemonicToSeed(mnemonic, "");
+encryptedSeedBytes = await emip3encrypt(seed, passphrase);
 // define the serializable data
 const serializableData: SerializableKeyAgentData = {
-  __typename: 'InMemory',
+  __typename: "InMemory",
   encryptedSeedBytes: encryptedSeedBytes,
-  id: 'http://example.gov/wallet/3732',
-  type: ['VerifiableCredential', 'EncryptedWallet'],
-  issuer: 'did:example:123',
-  issuanceDate: '2020-05-22T17:38:21.910Z',
+  id: "http://example.gov/wallet/3732",
+  type: ["VerifiableCredential", "EncryptedWallet"],
+  issuer: "did:example:123",
+  issuanceDate: "2020-05-22T17:38:21.910Z",
   credentialSubject: {
-    id: 'did:example:123',
-    contents: []
-  }
+    id: "did:example:123",
+    contents: [],
+  },
 };
 // define your passphrase
 const params = {
-  passphrase: 'passphrase'
-}
-const getPassphrase = () => new Promise<Uint8Array>((resolve) => resolve(Buffer.from(params.passphrase)))
+  passphrase: "passphrase",
+};
+const getPassphrase = () =>
+  new Promise<Uint8Array>((resolve) => resolve(Buffer.from(params.passphrase)));
 // create an instance of the KeyAgent
 const instance = new KeyAgentBase(serializableData, getPassphrase);
 // derive your first credential
 const derivationArgs: ChainDerivationArgs = {
-          network: "Mina",
-          accountIndex: 0,
-          addressIndex: 0,
-        }
+  network: "Mina",
+  accountIndex: 0,
+  addressIndex: 0,
+};
 const credential = instance.deriveCredentials(
-        derivationArgs,
-        getPassphrase,
-        true
-      )
+  derivationArgs,
+  getPassphrase,
+  true,
+);
 ```
 
 The derived credential should look something like this:
+
 ```typescript
 
 {
@@ -128,26 +128,27 @@ The constructor accepts a `GetPassphrase` function which is stored privately and
 const keyDecryptor = new KeyDecryptor(getPassphrase);
 
 const encryptedPrivateKey = await emip3encrypt(seed, passphrase);
-const decryptedPrivateKey = await keyDecryptor.decryptChildPrivateKey(encryptedPrivateKey);
+const decryptedPrivateKey =
+  await keyDecryptor.decryptChildPrivateKey(encryptedPrivateKey);
 
 const serializableData: SerializableKeyAgentData = {
-  __typename: 'InMemory',
+  __typename: "InMemory",
   encryptedSeedBytes: encryptedSeedBytes,
-  id: 'http://example.gov/wallet/3732',
-  type: ['VerifiableCredential', 'EncryptedWallet'],
-  issuer: 'did:example:123',
-  issuanceDate: '2020-05-22T17:38:21.910Z',
+  id: "http://example.gov/wallet/3732",
+  type: ["VerifiableCredential", "EncryptedWallet"],
+  issuer: "did:example:123",
+  issuanceDate: "2020-05-22T17:38:21.910Z",
   credentialSubject: {
-    id: 'did:example:123',
-    contents: []
-  }
+    id: "did:example:123",
+    contents: [],
+  },
 };
 const decryptedSeed = await keyDecryptor.decryptSeedBytes(serializableData);
 ```
 
 ### InMemoryKeyAgent
 
-The `InMemoryKeyAgent` extends `KeyAgentBase` to manage encrypted seed bytes in memory, facilitating the restoration of a key agent from a mnemonic phrase. It plays a crucial role in the secure handling of sensitive key material, aligning with the W3C Universal Wallet Specification. 
+The `InMemoryKeyAgent` extends `KeyAgentBase` to manage encrypted seed bytes in memory, facilitating the restoration of a key agent from a mnemonic phrase. It plays a crucial role in the secure handling of sensitive key material, aligning with the W3C Universal Wallet Specification.
 
 #### Usage and Functionality
 
@@ -161,17 +162,25 @@ The `InMemoryKeyAgent` extends `KeyAgentBase` to manage encrypted seed bytes in 
 
 ```typescript
 const mnemonicWords = [
-  'habit', 'hope', 'tip', 'crystal', 'because',
-  'grunt', 'nation', 'idea', 'electric', 'witness',
-  'alert', 'like'
+  "habit",
+  "hope",
+  "tip",
+  "crystal",
+  "because",
+  "grunt",
+  "nation",
+  "idea",
+  "electric",
+  "witness",
+  "alert",
+  "like",
 ];
-const getPassphrase = () => new Promise<Uint8Array>((resolve) =>
-  resolve(Buffer.from('passphrase'))
-);
+const getPassphrase = () =>
+  new Promise<Uint8Array>((resolve) => resolve(Buffer.from("passphrase")));
 
 const agent = await InMemoryKeyAgent.fromMnemonicWords({
   mnemonicWords,
-  getPassphrase
+  getPassphrase,
 });
 ```
 
@@ -213,9 +222,11 @@ export type RequestOffchainSession = {
 ```
 
 #### Usage
+
 An application, for example, a zkApp, might use SessionKeyAgentBase to derive a new random private key credential for a session. It can also handle an experimental web-provider listener that receives requests to sign the Merkle root of the session's parameters.
 
 Here's how an application can use SessionKeyAgentBase:
+
 ```typescript
 class SessionKeyAgentBaseInstance extends SessionKeyAgentBase {}
 const networkType = "testnet";
@@ -234,18 +245,21 @@ const sessionParams = {
   allowedMethods: [
     {
       contractAddress: "B62..dow",
-      method: "MoveChessPieces"
-    }
-  ]
+      method: "MoveChessPieces",
+    },
+  ],
 };
 const requestedSessionParams = {
   data: sessionParams,
-  sessionMerkleRoot: toMerkleTree(sessionParams).getRoot()
+  sessionMerkleRoot: toMerkleTree(sessionParams).getRoot(),
 };
 
 // Request wallet to sign the root
-const accounts = await window.mina.request({method: 'mina_enable'});
-const signedRoot = await window.mina.request({method: 'experimental_requestSession', params: requestedSessionParams});
+const accounts = await window.mina.request({ method: "mina_enable" });
+const signedRoot = await window.mina.request({
+  method: "experimental_requestSession",
+  params: requestedSessionParams,
+});
 
 // Commit signedRoot to contract
 const tx = await Mina.transaction(accounts[0], async () => {
@@ -267,4 +281,5 @@ for (const move of chessGameMoves) {
 ```
 
 #### Note
+
 Smart contract engineers are advised to encapsulate the complexity of constraining the session key's operations within their contract methods. The constraints can be expressed to end-users when asking them to sign the merkle root of permissions.

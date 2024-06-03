@@ -11,4 +11,11 @@
     body {
         @apply font-work-sans;
     }
+    .prose h1,
+    .prose h2,
+    .prose h3,
+    .prose h4,
+    .prose h5 {
+        font-weight: 500;
+    }
 }

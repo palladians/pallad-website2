@@ -1,4 +1,5 @@
 <script lang="ts">
+import { XIcon } from "lucide-svelte"
 import { writable } from "svelte/store"
 
 export const drawerOpen = writable<string>("")
@@ -33,18 +34,24 @@ export const drawerOpen = writable<string>("")
             class="w-full max-w-[710px] flex flex-col justify-between items-end min-h-full py-10 px-24 bg-secret-sauce text-base-content drop-shadow-2xl"
         >
             <div class="flex gap-2">
-                <a class="btn btn-outline lg:btn-lg">Mint theme</a>
                 <a
+                    href="https://get.pallad.co/extension"
+                    target="_blank"
+                    rel="noopener noreferrer"
                     class="btn bg-white border-none text-base-100 lg:btn-lg hover:bg-zinc-100"
                     >Add to Chrome</a
                 >
-                <a
+                <button
+                    type="button"
                     class="btn btn-circle bg-white border-none text-base-100 lg:btn-lg hover:bg-zinc-100"
-                    on:click={() => drawerOpen.set("")}>X</a
+                    on:click={() => drawerOpen.set("")}><XIcon /></button
                 >
             </div>
             <div class="flex flex-col gap-12 items-end">
                 <a href="/" class="text-5xl font-[500]">Home</a>
+                <a href="/faq" class="text-5xl font-[500]">FAQ</a>
+                <a href="/support" class="text-5xl font-[500]">Support</a>
+                <a href="/blog" class="text-5xl font-[500]">Blog</a>
                 <a href="/docs" target="_blank" class="text-5xl font-[500]"
                     >Docs</a
                 >

@@ -3,7 +3,6 @@ title: The Vault
 description: Pallad's core storage
 ---
 
-# The Vault
 Pallad itself manifests almost entirely in the `vault` package, which is the application's backend and exhibits all functional behavior of the wallet, except for the web-provider (apart from the allow-list of websites). The vault is a [Zustand](https://zustand-demo.pmnd.rs/) store made up of smaller Zustand slices. In principle, the `vault` can be re-used by anyone to build another wallet with their own UI.
 
 ## Overview
@@ -58,31 +57,35 @@ Implements the logic specified in `account-info-state.ts`, facilitating various 
 ## Example Usage
 
 ```typescript
-import createStore from 'zustand';
-import { accountSlice } from './account-info-store';
+import createStore from "zustand";
+import { accountSlice } from "./account-info-store";
 
 const useAccountStore = createStore(accountSlice);
 ```
 
 ### Methods
+
 Each method defined in account-info-store.ts can be accessed using the store instance created. For example, to ensure an account is initialized, you can use:
+
 ```ts
-useAccountStore.getState().ensureAccount('Mina - Berkeley', 'B62fjf...');
+useAccountStore.getState().ensureAccount("Mina - Berkeley", "B62fjf...");
 ```
 
 # Key Agent Store
 
-The key agent slice provides a state management store for a key agent's `SerializableKeyAgentData` in memory. This allows Pallad to store many `SerializableKeyAgentData` by `keyAgentName`, making Pallad a mult-mnemonic application -- users can define many key agents for as many different purposes as they desire. While Pallad does not support hardware wallets at the moment, the same applies for hardware wallet users, they will be able to define as many hardware devices as they desire to use in Pallad, the key agent slice is designed to be flexible in this regard. 
+The key agent slice provides a state management store for a key agent's `SerializableKeyAgentData` in memory. This allows Pallad to store many `SerializableKeyAgentData` by `keyAgentName`, making Pallad a mult-mnemonic application -- users can define many key agents for as many different purposes as they desire. While Pallad does not support hardware wallets at the moment, the same applies for hardware wallet users, they will be able to define as many hardware devices as they desire to use in Pallad, the key agent slice is designed to be flexible in this regard.
 
 The key agent slice does not manage the storing of encrypted child keys or their `GroupedCredential`, that is managed by the `credential` slice, the key agent slice is solely responsible for storing the seed key encrypted and its related information like `keyAgentName` and the `keyAgentType`.
 
 ## Key Files
+
 - `key-agent-store.ts`: Contains the core logic for the Zustand store slice managing the state of key agents.
 - `key-agent-state.ts`: Defines the types and initial states for key agents.
 
 ## Features
 
 ### State Management
+
 - **Ensure Key Agent**: Ensures a key agent is initialized in the store.
 - **Initialize Key Agent**: Initializes a new key agent from BIP39 mnemonic words.
 - **Restore Key Agent**: Restores a key agent from serialized data.
@@ -90,6 +93,7 @@ The key agent slice does not manage the storing of encrypted child keys or their
 - **Clear Store**: Clears all key agents from the store.
 
 ### Cryptographic Operations
+
 - **Request Signing**: Delegates a signing request to the appropriate key agent.
 - **Create Credential**: Creates a new credential for a specified key agent.
 - **Get Key Agent**: Retrieves the state of a specified key agent.
@@ -97,9 +101,11 @@ The key agent slice does not manage the storing of encrypted child keys or their
 ## Usage
 
 ### Setup Store
+
 To use this module, ensure that you have Zustand and Immer set up in your project. Include the key agent store in your Zustand store setup.
 
 ### Example Initialization
+
 ```typescript
 import { useStore } from './store'; // Assuming your Zustand store setup file is store.ts
 
@@ -123,38 +129,44 @@ This credential slice defines a state management slice for handling the credenti
 ## Key Functions
 
 ### ensureCredential
+
 - **Purpose**: Ensures a credential is initialized if it does not already exist.
 - **Parameters**:
   - `credentialName`: The unique name for the credential.
   - `keyAgentName`: The name of the key agent associated with the credential.
 
 ### setCredential
+
 - **Purpose**: Updates or sets the state of a specific credential.
 - **Parameters**:
   - `credentialState`: The state object of the credential.
 
 ### getCredential
+
 - **Purpose**: Retrieves a credential by name.
 - **Parameters**:
   - `credentialName`: The name of the credential to retrieve.
 
 ### removeCredential
+
 - **Purpose**: Removes a credential from the store.
 - **Parameters**:
   - `credentialName`: The name of the credential to remove.
 
 ### searchCredentials
+
 - **Purpose**: Searches credentials based on a query and optional properties filter.
 - **Parameters**:
   - `query`: Search conditions to match credentials.
   - `props`: Optional array of properties to return in the search results.
 
 ### clear
+
 - **Purpose**: Clears all credentials from the store.
 
 # Network Information Store
 
-This network information slice manages the storage of network information in Pallad. Specifically, it contains all relevant information the application requires on the network it can interact with. This includes network data end-points, network names, chain-ids, and the current network name Pallad is using. 
+This network information slice manages the storage of network information in Pallad. Specifically, it contains all relevant information the application requires on the network it can interact with. This includes network data end-points, network names, chain-ids, and the current network name Pallad is using.
 
 ## network-info-store.ts
 
@@ -185,37 +197,48 @@ This file defines TypeScript types for the state and actions of the network info
 ## Usage
 
 ### Initializing the Store
+
 You can integrate the store into your application by importing and initializing it like is done in `vault`:
+
 ```ts
-import { networkInfoSlice } from './path/to/network-info-store';
-import create from 'zustand';
+import { networkInfoSlice } from "./path/to/network-info-store";
+import create from "zustand";
 
 const useNetworkInfoStore = create(networkInfoSlice);
 ```
 
 ### Accessing and Modifying the Store
+
 Here's how you can interact with the store:
+
 ```ts
 // Set the current network name
-useNetworkInfoStore.setState(setCurrentNetworkName('testnet'));
+useNetworkInfoStore.setState(setCurrentNetworkName("testnet"));
 
 // Get current network configuration
-const currentNetworkInfo = useNetworkInfoStore.getState().getCurrentNetworkInfo();
+const currentNetworkInfo = useNetworkInfoStore
+  .getState()
+  .getCurrentNetworkInfo();
 
 // Update network information
-useNetworkInfoStore.getState().updateNetworkInfo('testnet', { chainId: 'new-chain-id' });
+useNetworkInfoStore
+  .getState()
+  .updateNetworkInfo("testnet", { chainId: "new-chain-id" });
 
 // Add a new network configuration
-useNetworkInfoStore.getState().setNetworkInfo('newnet', {
-  nodeEndpoint: { providerName: 'mina-node', url: 'http://mina-node.com' },
-  archiveNodeEndpoint: { providerName: 'mina-explorer', url: 'http://mina-explorer.com' },
-  networkName: 'Mina - Berkeley',
-  networkType: 'testnet',
-  chainId: '3c41383994b87449625df91769dff7b507825c064287d30fada9286f3f1cb15e'
+useNetworkInfoStore.getState().setNetworkInfo("newnet", {
+  nodeEndpoint: { providerName: "mina-node", url: "http://mina-node.com" },
+  archiveNodeEndpoint: {
+    providerName: "mina-explorer",
+    url: "http://mina-explorer.com",
+  },
+  networkName: "Mina - Berkeley",
+  networkType: "testnet",
+  chainId: "3c41383994b87449625df91769dff7b507825c064287d30fada9286f3f1cb15e",
 });
 
 // Remove a network
-useNetworkInfoStore.getState().removeNetworkInfo('Mina - Berkeley');
+useNetworkInfoStore.getState().removeNetworkInfo("Mina - Berkeley");
 
 // Clear all network information
 useNetworkInfoStore.getState().clear();
@@ -253,9 +276,11 @@ The web provider store manages and stores the websites that have various permiss
 # Vault Store
 
 ## Overview
+
 The Pallad Vault is the gloabl storage system for the Pallad browser extension which is made up of the above slices. It provides a single means to manage various aspects of a the wallet including accounts, transactions, credentials, and network configurations.
 
 ## Features
+
 - Multi-network Support: Compatible with different blockchain networks.
 - Credential Management: Secure storage for wallet credentials.
 - Dynamic Account Management: Functions to manage and switch between multiple accounts.
@@ -263,10 +288,12 @@ The Pallad Vault is the gloabl storage system for the Pallad browser extension w
 - Synchronization Utilities: Sync account information and transactions automatically.
 
 ## Key Components
+
 - `GlobalVaultStore`: The main interface for all vault operations.
 - `GlobalVaultState`: Stores the state of the vault including current network, wallet information, and known accounts.
 
 ## Key Methods
+
 - `createWallet()`: Create a new wallet with a mnemonic.
 - `restoreWallet()`: Restore a wallet from a mnemonic.
 - `switchNetwork()`: Change the active blockchain network.

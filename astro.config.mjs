@@ -19,7 +19,8 @@ export default defineConfig({
     tailwind(),
     svelte(),
     starlight({
-      title: "Pallad Docs",
+      title: "Pallad",
+      logo: { src: "./public/logo.svg" },
       titleDelimiter: "-",
       sidebar: [
         {
@@ -27,18 +28,32 @@ export default defineConfig({
           link: "/docs",
         },
         {
-          label: "Key Management",
-          link: "/docs/key-management",
+          label: "User Guide",
+          items: [{ label: "Getting Started", link: "/docs/getting-started" }],
         },
         {
-          label: "Providers",
-          link: "/docs/providers",
-        },
-        {
-          label: "Vault",
-          link: "/docs/vault",
+          label: "Developers",
+          items: [
+            {
+              label: "Key Management",
+              link: "/docs/key-management",
+            },
+            {
+              label: "Providers",
+              link: "/docs/providers",
+            },
+            {
+              label: "Vault",
+              link: "/docs/vault",
+            },
+          ],
         },
       ],
+      social: {
+        "x.com": "https://get.pallad.co/x",
+        discord: "https://get.pallad.co/discord",
+      },
+      customCss: ["./src/styles/docs.css"],
     }),
   ],
   adapter: node({

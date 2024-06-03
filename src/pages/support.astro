@@ -1,0 +1,46 @@
+---
+import MainLayout from "../layouts/main.astro"
+---
+
+<MainLayout title="All things ZK wallet" description="Pallad">
+    <div class="container flex flex-col lg:flex-row gap-32 py-48">
+        <div class="flex flex-col gap-16">
+            <h1 class="text-[64px] lg:text-[96px] leading-[5rem]">
+                Got a<br /><span class="text-tertiary">Problem?</span>
+            </h1>
+            <img src="/problem.svg" width={140} />
+        </div>
+        <div class="flex flex-col flex-1 gap-4">
+            <a
+                href="https://get.pallad.co/discord"
+                target="_blank"
+                rel="noreferrer noopener"
+                class="fle flex-row items-center card bg-secondary py-10 px-8 gap-8"
+            >
+                <div
+                    class="flex justify-center items-center w-20 h-20 rounded-full bg-neutral"
+                >
+                    <img src="/discord.svg" width={40} height={40} />
+                </div>
+                <h2 class="text-3xl text-primary">
+                    Chat with us on <span class="text-white">Discord</span>
+                </h2>
+            </a>
+            <a
+                href="https://get.pallad.co/issue"
+                target="_blank"
+                rel="noreferrer noopener"
+                class="fle flex-row items-center card bg-secondary py-10 px-8 gap-8"
+            >
+                <div
+                    class="flex justify-center items-center w-20 h-20 rounded-full bg-neutral"
+                >
+                    <img src="/github.svg" width={40} height={40} />
+                </div>
+                <h2 class="text-3xl text-primary">
+                    Open an issue on <span class="text-white">GitHub</span>
+                </h2>
+            </a>
+        </div>
+    </div>
+</MainLayout>

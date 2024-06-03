@@ -9,15 +9,12 @@ import MenuDrawer from "./menu-drawer.svelte"
         <img src="/logo.svg" alt="logo" class="w-10 h-10 lg:w-16 lg:h-16" />
     </a>
     <div class="flex items-center gap-4">
-        <a href="#" class="btn lg:btn-lg btn-secondary text-sm">Mint theme</a>
-        <div class="indicator">
-            <span class="indicator-item badge badge-accent font-[500]"
-                >soon</span
-            >
-            <a href="#" class="btn lg:btn-lg btn-primary text-sm"
-                >Add to Chrome</a
-            >
-        </div>
+        <a
+            href="https://get.pallad.co/extension"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn lg:btn-lg btn-primary text-sm">Add to Chrome</a
+        >
         <MenuDrawer client:load />
     </div>
 </nav>

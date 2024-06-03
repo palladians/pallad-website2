@@ -1,0 +1,50 @@
+[
+  {
+    "question": "What is Pallad?",
+    "answer": "Pallad is a cutting-edge, non-custodial wallet that leverages zero-knowledge (ZK) technology to provide a secure, private, and customizable experience for managing digital currencies and accessing decentralized applications (zkApps)."
+  },
+  {
+    "question": "How do I set up my Pallad wallet?",
+    "answer": "Setting up your Pallad wallet is simple. Download the app from our website, follow the registration steps to create your account, and secure your wallet with a unique password and recovery phrase. Remember to store your recovery phrase in a safe place!"
+  },
+  {
+    "question": "What makes Pallad different from other crypto wallets?",
+    "answer": "Pallad distinguishes itself through its integration of zero-knowledge proofs, offering users a 'Lightning-fast, All things ZK wallet' experience that prioritizes both speed and privacy without compromising on functionality."
+  },
+  {
+    "question": "Is Pallad secure?",
+    "answer": "Yes, Pallad employs advanced security measures including zero-knowledge proofs to ensure that your assets and personal information are protected against unauthorized access."
+  },
+  {
+    "question": "What are zkApps and how can I use them with Pallad?",
+    "answer": "zkApps are decentralized applications that utilize zero-knowledge proofs for enhanced privacy and efficiency. With Pallad, you can seamlessly access and interact with a variety of zkApps directly through your wallet interface."
+  },
+  {
+    "question": "How do I recover my Pallad wallet if I forget my password?",
+    "answer": "If you forget your password, you can recover your Pallad wallet using your recovery phrase. Simply initiate the password recovery process and follow the instructions to restore your wallet securely."
+  },
+  {
+    "question": "Can I buy and sell cryptocurrencies directly through Pallad?",
+    "answer": "This feature is coming soon :)"
+  },
+  {
+    "question": "Does Pallad support hardware wallets?",
+    "answer": "Yes, Pallad is compatible with several leading hardware wallets. This allows you to secure your crypto assets with hardware security while enjoying the features of Pallad."
+  },
+  {
+    "question": "How do I add funds to my Pallad wallet?",
+    "answer": "You can add funds to your Pallad wallet by transferring cryptocurrency from another wallet. You can find your wallet address by clicking the 'Receive' button, or in Wallet Management."
+  },
+  {
+    "question": "Are there any fees associated with using Pallad?",
+    "answer": "Pallad charges minimal transaction fees for transferring funds, which are used to support the network and maintain our high level of security and service. There are no direct fees we charge for our services."
+  },
+  {
+    "question": "How does Pallad protect my privacy?",
+    "answer": "Pallad uses zero-knowledge proofs to ensure that your transactions and personal data remain private. This technology allows the network to verify transactions without revealing any sensitive information."
+  },
+  {
+    "question": "Where can I get support if I have issues with my Pallad wallet?",
+    "answer": "For any issues or questions, you can reach out to our team via our Discord, Github or directly via email."
+  }
+]

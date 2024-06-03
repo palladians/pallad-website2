@@ -1,0 +1,35 @@
+---
+import MainLayout from "../layouts/main.astro"
+import faqs from "./faq.json"
+---
+
+<MainLayout title="All things ZK wallet" description="Pallad">
+    <div class="container flex flex-col lg:flex-row gap-16 py-48">
+        <div class="flex flex-col gap-16">
+            <h1 class="text-[64px] lg:text-[96px] leading-[5rem]">
+                Got a<br /><span class="text-tertiary">question?</span>
+            </h1>
+            <img src="/question.svg" width={140} />
+        </div>
+        <div class="flex flex-col flex-1">
+            {
+                faqs.map((faq, i) => (
+                    <div class="collapse collapse-arrow first:border-none border-t border-[#413E5E] rounded-none">
+                        <input
+                            type="radio"
+                            name="faq"
+                            value={i}
+                            checked={i === 0 ? "checked" : undefined}
+                        />
+                        <div class="collapse-title text-xl font-medium">
+                            {faq.question}
+                        </div>
+                        <div class="collapse-content">
+                            <p>{faq.answer}</p>
+                        </div>
+                    </div>
+                ))
+            }
+        </div>
+    </div>
+</MainLayout>

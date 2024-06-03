@@ -1,0 +1,23 @@
+---
+import MainLayout from "../layouts/main.astro"
+export const prerender = true
+import { getCollection } from "astro:content"
+export async function getStaticPaths() {
+  const subpages = await getCollection("subpages")
+  return subpages.map((subpage) => ({
+    params: { slug: subpage.slug },
+    props: { subpage },
+  }))
+}
+const { subpage } = Astro.props
+const { Content } = await subpage.render()
+---
+
+<MainLayout title={subpage.data.title} description={subpage.data.excerpt}>
+    <div class="container flex flex-col gap-8 py-48">
+        <article class="prose xl:prose-lg mx-auto">
+            <h1>{subpage.data.title}</h1>
+            <Content />
+        </article>
+    </div>
+</MainLayout>

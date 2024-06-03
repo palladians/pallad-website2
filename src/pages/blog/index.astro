@@ -1,1 +1,25 @@
+---
+import TileLarge from "../../components/blog/tile-large.astro"
+import TileSmall from "../../components/blog/tile-small.astro"
+import MainLayout from "../../layouts/main.astro"
+---
 
+<MainLayout title="Blog" description="Pallad">
+    <div class="container flex flex-col lg:flex-row gap-28 py-48">
+        <div class="flex flex-[2] flex-col gap-16">
+            <h1 class="text-[64px] lg:text-[96px] leading-[6rem]">
+                Blog<br /><span class="text-tertiary">articles</span>
+            </h1>
+            <div class="flex flex-col gap-16">
+                <TileLarge
+                    title="Lorem ipsum dolor sit amet, consectetur adipiscing elit"
+                    date="3 June 2024"
+                />
+            </div>
+        </div>
+        <div class="flex flex-1 flex-col gap-8">
+            <h2 class="text-primary text-lg">Popular articles</h2>
+            <TileSmall />
+        </div>
+    </div>
+</MainLayout>
