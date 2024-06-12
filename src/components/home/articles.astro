@@ -1,3 +1,11 @@
+---
+import { getCollection } from "astro:content";
+import dayjs from "dayjs";
+import { take } from "rambda";
+const blogArticles = await getCollection("articles");
+const lastTwoArticles = take(2, blogArticles);
+---
+
 <section class="g-fade container flex flex-col gap-8 py-32 pt-0">
     <div class="flex flex-col lg:flex-row justify-between">
         <h2 class="text-5xl lg:text-8xl font-[500] max-w-[600px]">
@@ -10,44 +18,32 @@
         >
     </div>
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
-        <div class="card flex-col lg:flex-row card-side bg-secondary">
-            <figure class="w-full aspect-[4/5]">
-                <img
-                    src="/post-1.jpeg"
-                    alt="Album"
-                    class="object-fit w-full h-full"
-                />
-            </figure>
-            <div class="card-body">
-                <p class="text-primary">May 12</p>
-                <h2 class="card-title text-3xl font-[500] text-mint">
-                    The most insightful stories about zkKYC
-                </h2>
-                <p>
-                    Confused by zero-knowledge proofs and zkKYC? Worried about
-                    privacy in blockchain? Dive into this...
-                </p>
-            </div>
-        </div>
-        <div class="card flex-col lg:flex-row card-side bg-secondary">
-            <figure class="w-full aspect-[4/5]">
-                <img
-                    src="/post-2.jpeg"
-                    alt="Album"
-                    class="object-fit w-full h-full"
-                />
-            </figure>
-            <div class="card-body">
-                <p class="text-primary">May 12</p>
-                <h2 class="card-title text-3xl font-[500] text-mint">
-                    Enhancing Identity Management with...
-                </h2>
-                <p>
-                    Biometric authentication, particularly fingerprint
-                    recognition, has emerged as a promising alternative due to
-                    its ease of...
-                </p>
-            </div>
-        </div>
+        {
+            lastTwoArticles.map((article) => (
+                <a
+                    href={`/blog/${article.slug}`}
+                    class="card flex-col lg:flex-row card-side bg-secondary"
+                >
+                    <figure class="aspect-[4/5] w-[10rem]">
+                        <img
+                            src={`/blog/${article.data.coverFileName}`}
+                            alt={article.data.title}
+                            class="object-fit h-full"
+                        />
+                    </figure>
+                    <div class="card-body">
+                        <p class="text-primary">
+                            {dayjs(article.data.publishedAt).format(
+                                "DD MMMM YYYY",
+                            )}
+                        </p>
+                        <h2 class="card-title text-3xl font-[500] text-mint">
+                            {article.data.title}
+                        </h2>
+                        <p>{article.data.excerpt}</p>
+                    </div>
+                </a>
+            ))
+        }
     </div>
 </section>

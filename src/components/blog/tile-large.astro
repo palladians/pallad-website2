@@ -1,15 +1,15 @@
 ---
-const { date, title } = Astro.props
+const { date, title, coverFileName, slug } = Astro.props;
 ---
 
-<div class="flex flex-col gap gap-2">
+<a href={`/blog/${slug}`} class="flex flex-col gap gap-2">
     <p class="text-mint">{date}</p>
     <h3 class="text-3xl">{title}</h3>
     <figure class="w-full max-h-[400px] rounded-lg mt-4">
         <img
-            src="/post-1.jpeg"
+            src={`/blog/${coverFileName}`}
             alt="Album"
             class="object-fit w-full h-full rounded-lg"
         />
     </figure>
-</div>
+</a>

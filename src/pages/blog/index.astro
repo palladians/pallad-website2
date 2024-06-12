@@ -1,7 +1,9 @@
 ---
-import TileLarge from "../../components/blog/tile-large.astro"
-import TileSmall from "../../components/blog/tile-small.astro"
-import MainLayout from "../../layouts/main.astro"
+import dayjs from "dayjs";
+import { getCollection } from "astro:content";
+import TileLarge from "../../components/blog/tile-large.astro";
+import MainLayout from "../../layouts/main.astro";
+const blogArticles = await getCollection("articles");
 ---
 
 <MainLayout title="Blog" description="Pallad">
@@ -11,15 +13,20 @@ import MainLayout from "../../layouts/main.astro"
                 Blog<br /><span class="text-tertiary">articles</span>
             </h1>
             <div class="flex flex-col gap-16">
-                <TileLarge
-                    title="Lorem ipsum dolor sit amet, consectetur adipiscing elit"
-                    date="3 June 2024"
-                />
+                {
+                    blogArticles.map((article) => (
+                        <TileLarge
+                            title={article.data.title}
+                            date={dayjs(article.data.publishedAt).format(
+                                "DD MMMM YYYY",
+                            )}
+                            coverFileName={article.data.coverFileName}
+                            slug={article.slug}
+                        />
+                    ))
+                }
             </div>
         </div>
-        <div class="flex flex-1 flex-col gap-8">
-            <h2 class="text-primary text-lg">Popular articles</h2>
-            <TileSmall />
-        </div>
+        <div class="flex-1"></div>
     </div>
 </MainLayout>

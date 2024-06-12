@@ -1,0 +1,40 @@
+---
+import dayjs from "dayjs";
+import MainLayout from "../../layouts/main.astro";
+export const prerender = true;
+import { getCollection } from "astro:content";
+export async function getStaticPaths() {
+    const subpages = await getCollection("articles");
+    return subpages.map((subpage) => ({
+        params: { slug: subpage.slug },
+        props: { subpage },
+    }));
+}
+const { subpage } = Astro.props;
+const { Content } = await subpage.render();
+---
+
+<MainLayout title={subpage.data.title} description={subpage.data.excerpt}>
+    <div class="container flex flex-col gap-8 py-48">
+        <div class="relative">
+            <img
+                src={`/blog/${subpage.data.coverFileName}`}
+                alt={subpage.data.title}
+                class="h-[28rem] w-full object-cover"
+            />
+            <div
+                class="absolute inset-0 flex justify-center items-end pb-8 bg-gradient-to-b from-zinc-900/10 to-zinc-900/100"
+            >
+                <div class="max-w-[45.5rem] w-full mx-auto">
+                    <h1 class="text-4xl">{subpage.data.title}</h1>
+                </div>
+            </div>
+        </div>
+        <article class="prose xl:prose-lg mx-auto">
+            <p class="text-mint">
+                {dayjs(subpage.data.publishedAt).format("DD MMMM YYYY")}
+            </p>
+            <Content />
+        </article>
+    </div>
+</MainLayout>
