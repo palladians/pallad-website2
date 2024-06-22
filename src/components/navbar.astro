@@ -1,8 +1,8 @@
 ---
-import MenuDrawer from "./menu-drawer.svelte";
-const { ok } = Astro.props;
-const homePage = Astro.url.pathname === "/";
-const showAlert = homePage && !ok;
+import MenuDrawer from "./menu-drawer.svelte"
+const { ok } = Astro.props
+const homePage = Astro.url.pathname === "/"
+const showAlert = homePage && !ok
 ---
 
 <nav class="fixed top-0 left-0 right-0 z-10">

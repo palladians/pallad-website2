@@ -1,9 +1,9 @@
 ---
-import { getCollection } from "astro:content";
-import dayjs from "dayjs";
-import { take } from "rambda";
-const blogArticles = await getCollection("articles");
-const lastTwoArticles = take(2, blogArticles);
+import { getCollection } from "astro:content"
+import dayjs from "dayjs"
+import { take } from "rambda"
+const blogArticles = await getCollection("articles")
+const lastTwoArticles = take(2, blogArticles)
 ---
 
 <section class="g-fade container flex flex-col gap-8 py-32 pt-0">

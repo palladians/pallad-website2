@@ -1,9 +1,9 @@
 ---
-import dayjs from "dayjs";
-import { getCollection } from "astro:content";
-import TileLarge from "../../components/blog/tile-large.astro";
-import MainLayout from "../../layouts/main.astro";
-const blogArticles = await getCollection("articles");
+import { getCollection } from "astro:content"
+import dayjs from "dayjs"
+import TileLarge from "../../components/blog/tile-large.astro"
+import MainLayout from "../../layouts/main.astro"
+const blogArticles = await getCollection("articles")
 ---
 
 <MainLayout title="Blog" description="Pallad">
