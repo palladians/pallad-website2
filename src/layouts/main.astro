@@ -1,28 +1,12 @@
 ---
-import { ofetch } from "ofetch"
 import Analytics from "../components/analytics.svelte"
 import BaseHead from "../components/base-head.astro"
 import Footer from "../components/footer.astro"
 import Navbar from "../components/navbar.astro"
 
-const PUBLIC_APP_URL = import.meta.env.PUBLIC_APP_URL
-
 const { title, description } = Astro.props
 
-const getOk = async () => {
-  if (!import.meta.env.PROD) return true
-  if (!PUBLIC_APP_URL || PUBLIC_APP_URL !== "https://pallad.co") {
-    return true
-  }
-  return (
-    await ofetch<{ ok: boolean }>(
-      `${import.meta.env.PUBLIC_APP_URL}/api/healthcheck.json`,
-      { parseResponse: JSON.parse },
-    )
-  ).ok
-}
-
-const ok = await getOk()
+const ok = false
 ---
 
 <html lang="en">
