@@ -17,7 +17,7 @@ If you joined the party early, there's a chance you've seen our initial UI with 
 
 ## Zeko Integration
 
-We have been working on the integration with (Zeko)[https://zeko.io/]. The Zeko DevNet is now all available in Pallad, and you should be able to switch to Zeko and use it with our Web Connector interface.
+We have been working on the integration with [Zeko](https://zeko.io/). The Zeko DevNet is now all available in Pallad, and you should be able to switch to Zeko and use it with our Web Connector interface.
 
 ## Next steps
 
@@ -32,4 +32,4 @@ Pallad wouldn't happen if not some specific people contributing to it, giving a 
 - Rafał Goławski
 - Mathieu Henrijean
 - Talha Ünsal
-- Closed Beta Testers: (Inthestrongwind)[https://x.com/UselessJerryQ], (lamps)[https://x.com/lamps945]
+- Closed Beta Testers: [Inthestrongwind](https://x.com/UselessJerryQ), [lamps](https://x.com/lamps945)
