@@ -1,8 +1,8 @@
 <script lang="ts">
-import { XIcon } from "lucide-svelte"
-import { writable } from "svelte/store"
+    import { XIcon } from "lucide-svelte";
+    import { writable } from "svelte/store";
 
-export const drawerOpen = writable<string>("")
+    export const drawerOpen = writable<string>("");
 </script>
 
 <div class="drawer drawer-end">
@@ -48,12 +48,19 @@ export const drawerOpen = writable<string>("")
                 >
             </div>
             <div class="flex flex-col gap-12 items-end">
-                <a href="/" class="text-5xl font-[500]">Home</a>
-                <a href="/faq" class="text-5xl font-[500]">FAQ</a>
-                <a href="/support" class="text-5xl font-[500]">Support</a>
-                <a href="/blog" class="text-5xl font-[500]">Blog</a>
-                <a href="/docs" target="_blank" class="text-5xl font-[500]"
-                    >Docs</a
+                <a href="/" class="text-3xl lg:text-5xl font-[500]">Home</a>
+                <a href="/faq" class="text-3xl lg:text-5xl font-[500]">FAQ</a>
+                <a href="/support" class="text-3xl lg:text-5xl font-[500]"
+                    >Support</a
+                >
+                <a href="/blog" class="text-3xl lg:text-5xl font-[500]">Blog</a>
+                <a href="/roadmap" class="text-3xl lg:text-5xl font-[500]"
+                    >Roadmap</a
+                >
+                <a
+                    href="/docs"
+                    target="_blank"
+                    class="text-3xl lg:text-5xl font-[500]">Docs</a
                 >
             </div>
         </div>
