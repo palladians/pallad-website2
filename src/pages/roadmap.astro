@@ -1,34 +1,36 @@
 ---
-import Mermaid from "../components/mermaid.svelte";
-import MainLayout from "../layouts/main.astro";
+import dedent from "dedent"
+import Mermaid from "../components/mermaid.svelte"
+import MainLayout from "../layouts/main.astro"
 
-export const chart = `timeline
-    section Q3 2024
-        Wallet
-          : Mainnet Beta Release
-          : Mina On-Ramp
-          : Internationalization (Turkish)
-          : Fungible Tokens
-        Integrations
-          : zkApp Integrations
-          : Protokit Pallad Signer
-    section Q4 2024
-        Wallet
-          : NFTs
-          : Browser Node
-          : Multi account
-          : Custom RPC URL
-        Integrations
-          : Naming Service & Handles
-          : DeFi
-    section Q1 2025
-        Wallet
-          : Mobile Wallet
-          : Account Abstraction
-          : Wallet to Wallet Messaging
-        Integrations
-          : Governance
-`;
+export const chart = dedent`
+  timeline
+  section Q3 2024
+      Wallet
+        : Mainnet Beta Release
+        : Mina On-Ramp
+        : Internationalization (Turkish)
+        : Fungible Tokens
+      Integrations
+        : zkApp Integrations
+        : Protokit Pallad Signer
+  section Q4 2024
+      Wallet
+        : NFTs
+        : Browser Node
+        : Multi account
+        : Custom RPC URL
+      Integrations
+        : Naming Service & Handles
+        : DeFi
+  section Q1 2025
+      Wallet
+        : Mobile Wallet
+        : Account Abstraction
+        : Wallet to Wallet Messaging
+      Integrations
+        : Governance
+`
 ---
 
 <MainLayout title="Roadmap" description="Pallad">

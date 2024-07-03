@@ -1,12 +1,12 @@
-import mdx from "@astrojs/mdx";
-import sitemap from "@astrojs/sitemap";
-import starlight from "@astrojs/starlight";
-import svelte from "@astrojs/svelte";
-import tailwind from "@astrojs/tailwind";
-import expressiveCode from "astro-expressive-code";
-import { defineConfig } from "astro/config";
+import mdx from "@astrojs/mdx"
+import sitemap from "@astrojs/sitemap"
+import starlight from "@astrojs/starlight"
+import svelte from "@astrojs/svelte"
+import tailwind from "@astrojs/tailwind"
+import expressiveCode from "astro-expressive-code"
+import { defineConfig } from "astro/config"
 
-import node from "@astrojs/node";
+import node from "@astrojs/node"
 
 // https://astro.build/config
 export default defineConfig({
@@ -68,4 +68,4 @@ export default defineConfig({
   adapter: node({
     mode: "standalone",
   }),
-});
+})

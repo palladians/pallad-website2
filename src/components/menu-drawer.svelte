@@ -1,8 +1,8 @@
 <script lang="ts">
-    import { XIcon } from "lucide-svelte";
-    import { writable } from "svelte/store";
+import { XIcon } from "lucide-svelte"
+import { writable } from "svelte/store"
 
-    export const drawerOpen = writable<string>("");
+export const drawerOpen = writable<string>("")
 </script>
 
 <div class="drawer drawer-end">
