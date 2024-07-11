@@ -8,6 +8,7 @@ export const html = writable<string>("<p>loading</p>")
 
 onMount(async () => {
   mermaid.initialize({
+    securityLevel: "sandbox",
     theme: "dark",
     themeVariables: {
       cScale0: "#F6C177",
