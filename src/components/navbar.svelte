@@ -1,13 +1,24 @@
----
+<script lang="ts">
+import { ofetch } from "ofetch"
+import { onMount } from "svelte"
+import { derived, writable } from "svelte/store"
 import MenuDrawer from "./menu-drawer.svelte"
-const { ok } = Astro.props
-const homePage = Astro.url.pathname === "/"
-const showAlert = homePage && !ok
----
+const homePage = window.location.pathname === "/"
+
+const ok = writable(true)
+const showAlert = derived(ok, (ok) => !ok && homePage)
+
+onMount(() => {
+  const fetchOk = async () => {
+    const data = JSON.parse(await ofetch("/api/healthcheck.json"))
+    ok.set(data.ok)
+  }
+  fetchOk()
+})
+</script>
 
 <nav class="fixed top-0 left-0 right-0 z-10">
-    {
-        showAlert && (
+    {#if $showAlert}
             <div
                 role="alert"
                 class="alert flex justify-between bg-secondary shadow-lg rounded-none"
@@ -22,8 +33,7 @@ const showAlert = homePage && !ok
                     Check status
                 </a>
             </div>
-        )
-    }
+    {/if}
     <div class="container flex justify-between items-center pt-10">
         <a href="/">
             <img src="/logo.svg" alt="logo" class="w-10 h-10 lg:w-16 lg:h-16" />
@@ -35,7 +45,7 @@ const showAlert = homePage && !ok
                 rel="noopener noreferrer"
                 class="btn lg:btn-lg btn-primary text-sm">Add to Chrome</a
             >
-            <MenuDrawer client:load />
+            <MenuDrawer />
         </div>
     </div>
 </nav>
