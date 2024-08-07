@@ -19,10 +19,6 @@ We started building Pallad by creating a prototype of it with cutting-edge techn
 
 Over the past few weeks, Pallad has undergone a security audit by a blockchain security company, OtterSec. This process ensured that there are unlikely to be any serious vulnerabilities (yes, we're not going to lie to you and say that the wallet is 100% secure, because there is no such wallet) that could put your tokens at risk, but remember, always do your own research and trust only yourself. We have also improved the web connector of our wallet to make life easier for zkApp developers. We will soon support developers to integrate the first Mainnet zkApps with Pallad.
 
-## The big preparation
-
-Over the past few weeks, Pallad has undergone a security audit by a blockchain security company, OtterSec. This process ensured that there are unlikely to be any serious vulnerabilities (yes, we're not going to lie to you and say that the wallet is 100% secure, because there is no such wallet) that could put your tokens at risk, but remember, always do your own research and trust only yourself. We have also improved the web connector of our wallet to make life easier for zkApp developers. We will soon support developers to integrate the first Mainnet zkApps with Pallad.
-
 ## What now?
 
 Sit back, relax and create or restore your Mina wallet in Pallad. Prioritize your security and consider creating a new wallet with Pallad and then transferring funds to it, but restoring Auro and Clorio works just fine. Creating a new wallet reduces the potential attack vector. Our team will look for community feedback and we'll start improving the wallet and its performance.
