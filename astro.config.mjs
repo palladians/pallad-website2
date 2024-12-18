@@ -1,4 +1,3 @@
-import { loadEnv } from "vite"
 import mdx from "@astrojs/mdx"
 import sitemap from "@astrojs/sitemap"
 import starlight from "@astrojs/starlight"
@@ -6,6 +5,7 @@ import svelte from "@astrojs/svelte"
 import tailwind from "@astrojs/tailwind"
 import expressiveCode from "astro-expressive-code"
 import { defineConfig } from "astro/config"
+import { loadEnv } from "vite"
 
 import node from "@astrojs/node"
 const { BLOCKBERRY_API_KEY } = loadEnv(
@@ -74,21 +74,4 @@ export default defineConfig({
   adapter: node({
     mode: "standalone",
   }),
-  vite: {
-    server: {
-      proxy: {
-        "/proxy": {
-          target: "https://api.blockberry.one",
-          changeOrigin: true,
-          rewrite: (path) => path.replace(/^\/proxy/, ""),
-          secure: false,
-          headers: {
-            "x-api-key": BLOCKBERRY_API_KEY,
-            accept: "application/json",
-            "content-type": "application/json",
-          },
-        },
-      },
-    },
-  },
 })
