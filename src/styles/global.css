@@ -8,6 +8,9 @@
 }
 
 @layer base {
+  .font-work-sans {
+    font-family: 'Work Sans', sans-serif;
+  }
     body {
         @apply font-work-sans;
     }

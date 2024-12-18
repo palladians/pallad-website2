@@ -1,5 +1,8 @@
-/** @type {import('tailwindcss').Config} */
-export default {
+import daisyui from "daisyui"
+import typography from "@tailwindcss/typography"
+import type { Config } from "tailwindcss"
+
+const config: Config = {
   daisyui: {
     themes: [
       {
@@ -48,5 +51,7 @@ export default {
       },
     },
   },
-  plugins: [require("daisyui"), require("@tailwindcss/typography")],
+  plugins: [daisyui, typography],
 }
+
+export default config
