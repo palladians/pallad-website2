@@ -4,7 +4,7 @@ import { onMount } from "svelte"
 import { writable } from "svelte/store"
 
 export let chart: string
-export const html = writable<string>("<p>loading</p>")
+const html = writable("<p>loading</p>")
 
 onMount(async () => {
   mermaid.initialize({

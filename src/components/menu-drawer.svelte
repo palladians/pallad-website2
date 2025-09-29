@@ -2,7 +2,7 @@
 import { XIcon } from "lucide-svelte"
 import { writable } from "svelte/store"
 
-export const drawerOpen = writable<string>("")
+export const drawerOpen = writable<boolean>(false)
 </script>
 
 <div class="drawer drawer-end">
@@ -44,7 +44,7 @@ export const drawerOpen = writable<string>("")
                 <button
                     type="button"
                     class="btn btn-circle bg-white border-none text-base-100 lg:btn-lg hover:bg-zinc-100"
-                    on:click={() => drawerOpen.set("")}><XIcon /></button
+                    on:click={() => drawerOpen.set(false)}><XIcon /></button
                 >
             </div>
             <div class="flex flex-col gap-12 items-end">
